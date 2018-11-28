@@ -1,5 +1,7 @@
 import React from 'react'
 
+import NewMessageForm from './NewMessageForm'
+
 class Chat extends React.Component {
   state = {
     newMessageText: 'krowa'
@@ -9,17 +11,16 @@ class Chat extends React.Component {
     this.setState({ newMessageText: event.target.value })
   )
 
+  onNewMessageAddClickHandler = () => {}
+
   render() {
     return (
       <div>
-        <input
-          type="text"
-          value={this.state.newMessageText}
-          onChange={this.onNewMessageTextChangeHandler}
+        <NewMessageForm 
+          newMessageText={this.state.newMessageText}
+          onNewMessageTextChangeHandler={this.onNewMessageTextChangeHandler}
+          onNewMessageAddClickHandler={this.onNewMessageAddClickHandler}
         />
-        <button>
-          Add message!
-        </button>
       </div>
     )
   }
