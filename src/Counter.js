@@ -8,6 +8,26 @@ class Counter extends React.Component {
   inc = () => this.setState({ counter: this.state.counter + 1 })
   dec = () => this.setState({ counter: this.state.counter - 1 })
 
+  saveToFirebase = () => {
+    fetch(
+      'https://ad-snadbox.firebaseio.com/counter.json',
+      {
+        method: 'PUT',
+        body: JSON.stringify(this.state.counter)
+      }
+    )
+  }
+
+  componentDidMount() {
+    fetch('https://ad-snadbox.firebaseio.com/counter.json')
+      .then(r => r.json())
+      .then(data => this.setState({ counter: data }))
+  }
+
+  componentDidUpdate() {
+    this.saveToFirebase()
+  }
+
   render() {
     return (
       <div>
