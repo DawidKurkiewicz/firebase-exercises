@@ -1,9 +1,9 @@
 import React from 'react'
-import Chat from './Chat'
+import GoogleAssistant from './GoogleAssistant'
 
 const App = (props) => (
   <div>
-    <Chat />
+    <GoogleAssistant />
   </div>
 )
 
