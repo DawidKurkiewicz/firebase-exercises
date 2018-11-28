@@ -1,12 +1,21 @@
 import React from 'react'
 
+import { database } from './firebaseConfig'
+
 class Counter extends React.Component {
   state = {
     counter: 0
   }
 
-  inc = () => this.setState({ counter: this.state.counter + 1 })
-  dec = () => this.setState({ counter: this.state.counter - 1 })
+  componentDidMount() {
+    database.ref('/counter').on(
+      'value',
+      snapshot => this.setState({ counter: snapshot.val() })
+    )
+  }
+
+  inc = () => database.ref('/counter').set(this.state.counter + 1)
+  dec = () => database.ref('/counter').set(this.state.counter - 1)
 
   render() {
     return (
