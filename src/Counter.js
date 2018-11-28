@@ -5,7 +5,16 @@ class Counter extends React.Component {
     counter: 0
   }
 
-  inc = () => this.setState({ counter: this.state.counter + 1 })
+  inc = () => {
+    this.loadFromFirebase()
+      .then(() => {
+        this.setState(
+          { counter: this.state.counter + 1 },
+          this.saveToFirebase
+        )
+      })
+  }
+
   dec = () => this.setState({ counter: this.state.counter - 1 })
 
   saveToFirebase = () => (
@@ -29,11 +38,6 @@ class Counter extends React.Component {
 
   componentDidMount() {
     this.loadFromFirebase()
-  }
-
-  componentDidUpdate() {
-    this.loadFromFirebase()
-      .then(() => this.saveToFirebase())
   }
 
   render() {
