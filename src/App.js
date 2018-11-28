@@ -1,9 +1,9 @@
 import React from 'react'
-import Counter from './Counter'
+import Chat from './Chat'
 
 const App = (props) => (
   <div>
-    <Counter />
+    <Chat />
   </div>
 )
 
