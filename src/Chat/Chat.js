@@ -10,7 +10,7 @@ const dbMessagesRef = database.ref('/jfddl6-messages')
 
 class Chat extends React.Component {
   state = {
-    newMessageText: 'krowa',
+    newMessageText: '',
     messages: []
   }
   componentDidMount() {
@@ -22,6 +22,11 @@ class Chat extends React.Component {
       })
     )
   }
+  onDeleteMessageClickHandler = messageKey => {
+    dbMessagesRef.child(messageKey)
+      .remove()
+  }
+
 
   onNewMessageTextChangeHandler = (event) =>
     this.setState({ newMessageText: event.target.value })
@@ -29,7 +34,9 @@ class Chat extends React.Component {
   componentWillUnmount() {
     dbMessagesRef.off()
   }
-  onNewMessageAddClickHandler = () => {
+  onNewMessageAddClickHandler = event => {
+    event.preventDefault()
+
     dbMessagesRef.push({
       text: this.state.newMessageText,
       timestamp: Date.now()
@@ -47,6 +54,7 @@ class Chat extends React.Component {
 
         <MessagesList
           messages={this.state.messages}
+          onDeleteMessageClickHandler={this.onDeleteMessageClickHandler}
         />
       </div>
     )

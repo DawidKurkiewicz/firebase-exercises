@@ -5,6 +5,9 @@ import IconButton from 'material-ui/IconButton'
 import moment from 'moment'
 
 
+
+
+
 const MessagesList = (props) => (
     <List>
         {props.messages.map(message => (
@@ -14,7 +17,7 @@ const MessagesList = (props) => (
                 secondaryText={moment(message.timestamp).format('DD-MM-YYYY hh:mm')}
                 rightIconButton={
                     <IconButton
-                    onClick ={() => alert(message.key)}
+                    onClick = {() => props.onDeleteMessageClickHandler(message.key)}
                     >
                         <DeleteIcon />
                     </IconButton>

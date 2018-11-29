@@ -18,19 +18,22 @@ const NewMessageForm = (props) => (
   <Paper
     style={style}
   >
-    <TextField
-      type="text"
-      value={props.newMessageText}
-      onChange={props.onNewMessageTextChangeHandler}
-      fullWidth
-    />
-    <RaisedButton
-      label="Add message!"
-      onClick={props.onNewMessageAddClickHandler}
-      fullWidth
-      primary={true}
-    />
-
+    <form
+      onSubmit={props.onNewMessageAddClickHandler}
+    >
+      <TextField
+        type="text"
+        value={props.newMessageText}
+        onChange={props.onNewMessageTextChangeHandler}
+        fullWidth
+      />
+      <RaisedButton
+        label="Add message!"
+        onClick={props.onNewMessageAddClickHandler}
+        fullWidth
+        primary={true}
+      />
+    </form>
   </Paper>
 )
 
