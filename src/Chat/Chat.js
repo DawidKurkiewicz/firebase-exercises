@@ -12,37 +12,7 @@ class Chat extends React.Component {
     messages: []
   }
 
-  componentDidMount() {
-    dbMessagesRef.on(
-      'value',
-      snapshot => {
-        const messages = Object.entries(
-          snapshot.val()
-        ).map(entry => ({
-          ...entry[1],
-          key: entry[0]
-        }))
 
-        this.setState({ messages: messages })
-      }
-    )
-  }
-
-  componentWillUnmount(){
-    dbMessagesRef.off()
-  }
-
-  onNewMessageTextChangeHandler = event => (
-    this.setState({ newMessageText: event.target.value })
-  )
-
-  onNewMessageAddClickHandler = () => {
-    dbMessagesRef.push({
-      text: this.state.newMessageText,
-      timestamp: Date.now()
-    })
-    this.setState({ newMessageText: '' })
-  }
 
   render() {
     return (
