@@ -1,5 +1,6 @@
 import React from 'react'
 import Auth from './Auth'
+import Chat from './Chat'
 
 
 
@@ -7,7 +8,9 @@ import Auth from './Auth'
 
 const App = (props) => (
   <div>
-    <Auth />
+    <Auth>
+      <Chat />
+    </Auth>
   </div>
 )
 

@@ -1,5 +1,6 @@
 import firebase from 'firebase'
 
+
 const config = {
   apiKey: "AIzaSyDqEP7wJzYUDVeErnrCdbjlxUUFoCsQhBw",
   authDomain: "dawid-kurkiewicz.firebaseapp.com",
@@ -11,4 +12,5 @@ const config = {
 
 firebase.initializeApp(config)
 
+export const auth = firebase.auth()
 export const database = firebase.database()

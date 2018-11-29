@@ -2,6 +2,7 @@ import React from 'react'
 
 import Forms from './Forms'
 
+import { auth } from '../firebaseConfig'
 
 
 
@@ -9,8 +10,22 @@ class Auth extends React.Component {
 
     state = {
         email: '',
-        password: ''
+        password: '',
+        isUserLoggedIn: false
     }
+    componentDidMount() {
+        auth.onAuthStateChanged(
+            user => {
+                if (user) {
+                    this.setState({ isUserLoggedIn: true })
+                } else {
+                    this.setState({ isUserLoggedIn: false })
+                }
+            }
+        )
+    }
+
+
     onEmailChangeHandler = event => {
         this.setState({ email: event.target.value })
     }
@@ -18,7 +33,11 @@ class Auth extends React.Component {
         this.setState({ password: event.target.value })
     }
     onLogInClick = () => {
-        alert('bu')
+        auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+       .catch(error => {
+           alert ('something is wrong')
+           console.log(error)
+       })
     }
     onLogInByGoogleClick = () => {
         alert('bu')
@@ -27,14 +46,17 @@ class Auth extends React.Component {
 
     render() {
         return (
-            <Forms
-                email={this.state.email}
-                onEmailChangeHandler={this.onEmailChangeHandler}
-                password={this.state.password}
-                onPasswordChangeHandler={this.onPasswordChangeHandler}
-                onLogInClick={this.onLogInClick}
-                onLogInByGoogleClick={this.onLogInByGoogleClick}
-            />
+            this.state.isUserLoggedIn ?
+                this.props.children
+                :
+                <Forms
+                    email={this.state.email}
+                    onEmailChangeHandler={this.onEmailChangeHandler}
+                    password={this.state.password}
+                    onPasswordChangeHandler={this.onPasswordChangeHandler}
+                    onLogInClick={this.onLogInClick}
+                    onLogInByGoogleClick={this.onLogInByGoogleClick}
+                />
         )
     }
 }
