@@ -8,6 +8,7 @@ import Chat from './Chat'
 
 const App = (props) => (
   <div>
+    <h1>CHAT</h1>
     <Auth>
       <Chat />
     </Auth>

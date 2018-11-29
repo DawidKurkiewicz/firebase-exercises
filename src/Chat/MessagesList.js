@@ -3,6 +3,7 @@ import { List, ListItem } from 'material-ui/List';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import IconButton from 'material-ui/IconButton'
 import moment from 'moment'
+import Avatar from 'material-ui/Avatar'
 
 
 
@@ -10,22 +11,31 @@ import moment from 'moment'
 
 const MessagesList = (props) => (
     <List>
-        {props.messages.map(message => (
-            <ListItem
-                key={message.key}
-                primaryText={message.text}
-                secondaryText={moment(message.timestamp).format('DD-MM-YYYY hh:mm')}
-                rightIconButton={
-                    <IconButton
-                    onClick = {() => props.onDeleteMessageClickHandler(message.key)}
-                    >
-                        <DeleteIcon />
-                    </IconButton>
-                }
-            >
+        {
+            props.messages.map(message => (
+                <ListItem
+                    leftAvatar={
+                        <Avatar
+                            src={message.author.img}
+                        />
+                    }
+                    primaryText={message.text}
+                    secondaryText={`
+                    ${moment(message.timestamp).format('DD-MM-YYYY hh:mm')}
+                    ${message.author.displayName || message.author.email}
+                `}
+                    key={message.key}
+                    rightIconButton={
+                        <IconButton
+                            onClick={() => props.onDeleteMessageClickHandler(message.key)}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    }
+                >
 
-            </ListItem>
-        ))}
+                </ListItem>
+            ))}
     </List>
 )
 
