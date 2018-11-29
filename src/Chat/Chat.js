@@ -1,8 +1,10 @@
 import React from 'react'
 
 import { database } from '../firebaseConfig'
+import { mapObjectToArray } from '../utils'
 
 import NewMessageForm from './NewMessageForm'
+import MessagesList from './MessagesList';
 
 const dbMessagesRef = database.ref('/jfddl6-messages')
 
@@ -11,8 +13,28 @@ class Chat extends React.Component {
     newMessageText: 'krowa',
     messages: []
   }
+  componentDidMount() {
+    dbMessagesRef.on(
+      'value',
+      snapshot => this.setState({
+        messages: mapObjectToArray(snapshot.val()).reverse(),
+        newMessageText: ''
+      })
+    )
+  }
 
+  onNewMessageTextChangeHandler = (event) =>
+    this.setState({ newMessageText: event.target.value })
 
+  componentWillUnmount() {
+    dbMessagesRef.off()
+  }
+  onNewMessageAddClickHandler = () => {
+    dbMessagesRef.push({
+      text: this.state.newMessageText,
+      timestamp: Date.now()
+    })
+  }
 
   render() {
     return (
@@ -22,15 +44,10 @@ class Chat extends React.Component {
           onNewMessageTextChangeHandler={this.onNewMessageTextChangeHandler}
           onNewMessageAddClickHandler={this.onNewMessageAddClickHandler}
         />
-        {
-          this.state.messages.map(message => (
-            <div
-              key={message.key}
-            >
-              {message.text}
-            </div>
-          ))
-        }
+
+        <MessagesList
+          messages={this.state.messages}
+        />
       </div>
     )
   }
